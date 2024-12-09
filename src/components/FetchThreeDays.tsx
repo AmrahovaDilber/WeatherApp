@@ -28,7 +28,7 @@ interface FetchSevenDaysProps {
   weatherInfor: WeatherInfor;
 }
 
-const FetchSevenDays: React.FC<FetchSevenDaysProps> = ({
+const FetchThreeDays: React.FC<FetchSevenDaysProps> = ({
   query,
   weatherInfor,
 }) => {
@@ -85,4 +85,4 @@ const FetchSevenDays: React.FC<FetchSevenDaysProps> = ({
   );
 };
 
-export default FetchSevenDays;
+export default FetchThreeDays;

@@ -4,8 +4,8 @@ import Name from "./components/Name";
 import { fetchWeather } from "./api";
 import { weatherType } from "./type/types";
 import Infor from "./components/Infor";
-import FetchSevenDays from "./components/FetchSevenDays";
 import HourlyForecast from "./components/HourlyForecast";
+import FetchThreeDays from "./components/FetchThreeDays";
 
 export default function App() {
   const [query, setQuery] = useState<string>("");
@@ -69,7 +69,7 @@ export default function App() {
               <Infor weatherInfor={weatherInfor}></Infor>
             </div>
             <div className="max-w-[100%] w-full flex space-x-[100px]">
-              <FetchSevenDays query={query} weatherInfor={weatherInfor}></FetchSevenDays>
+              <FetchThreeDays query={query} weatherInfor={weatherInfor}></FetchThreeDays>
               <HourlyForecast query={query}></HourlyForecast>
             </div>
           </div>

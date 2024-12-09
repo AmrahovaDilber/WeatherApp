@@ -23,37 +23,35 @@ export const weatherApi = async (
   }
 };
 
-// Fetch weather data for a specific location
+
 export const fetchWeather = async (location: string) => {
   return await weatherApi("/current.json", { q: location });
 };
 
 export const fetch7DaysWeather = async (countryName: string) => {
   try {
-    const response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${countryName}&days=7&aqi=no&alerts=no
-`
-    );
-    if (!response.ok) {
-      throw new Error(`Error fetching weather data: ${response.statusText}`);
-    }
-    const data = await response.json();
+    const data = await weatherApi("/forecast.json", {
+      q: countryName,
+      days: "7",
+      aqi: "no",
+      alerts: "no",
+    });
     return data;
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    console.error("Error in fetch7DaysWeather:", error);
+    throw error;
   }
 };
 
-export const fetchHourlyForecast = async (countryName) => {
+export const fetchHourlyForecast = async (countryName: string) => {
   try {
-    const response =
-      await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${countryName}&days=1
-`);
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
+    const data = await weatherApi("/forecast.json", {
+      q: countryName,
+      days: "1",
+    });
+    return data;
   } catch (error) {
-    console.log(error);
+    console.error("Error in fetchHourlyForecast:", error);
+    throw error; 
   }
 };
