@@ -29,7 +29,7 @@ export default function App() {
     if (!weatherCondition) return "./bg2.jpeg"; 
     switch (weatherCondition) {
       case "Overcast":
-        return "./Clouds.png";
+        return "./overcast.jpg";
       case "Partly cloudy":
         return "./cloudy.jpeg";
       case "Sunny":
@@ -68,7 +68,7 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-r from-purple-500 to-blue-500 dark:bg-gray-800 relative">
+    <div className="w-full min-h-screen bg-gradient-to-r  from-purple-500 to-blue-500 dark:bg-gray-800 relative">
       <img
         key={weatherInfor?.location?.name || "default"}
         src={getBackgroundImage(weatherInfor?.current?.condition?.text)}
@@ -77,24 +77,28 @@ export default function App() {
       />
       <div className="absolute inset-0 bg-black bg-opacity-40 z-0 min-h-screen"></div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto py-[30px]">
-        <Header query={query} setQuery={setQuery} getCurrentLocation={getCurrentLocation} />
-        {weatherInfor ? (
-          <div className="flex flex-col">
-            <div className="w-full flex py-[60px]">
-              <Name weatherInfor={weatherInfor} query={query} />
-              <Infor weatherInfor={weatherInfor} />
-            </div>
-            {!currentPosition&&(<div className="max-w-[100%] w-full flex space-x-[100px]">
-              <FetchThreeDays query={query} weatherInfor={weatherInfor} />
-              <HourlyForecast query={query} />
-            </div>)}
-            
-          </div>
-        ) : (
-          <div className="text-center shadow-lg text-white h-screen font-semibold text-[24px] flex justify-center items-center">Please enter a city or use the current location button to get weather data.</div>
-        )}
+      <div className="relative z-10 max-w-[1200px] mx-auto py-8 px-4">
+  <Header query={query} setQuery={setQuery} getCurrentLocation={getCurrentLocation} />
+  {weatherInfor ? (
+    <div className="flex flex-col space-y-8">
+      <div className="w-full flex flex-col md:flex-row items-center md:items-start py-8 space-y-8 md:space-y-0 md:space-x-8">
+        <Name weatherInfor={weatherInfor} query={query} />
+        <Infor weatherInfor={weatherInfor} />
       </div>
+      {!currentPosition && (
+        <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-8 lg:space-y-0 ">
+          <FetchThreeDays query={query} weatherInfor={weatherInfor} />
+          <HourlyForecast query={query} />
+        </div>
+      )}
+    </div>
+  ) : (
+    <div className="text-center shadow-lg text-white h-screen font-semibold text-lg md:text-xl lg:text-2xl flex justify-center items-center">
+      Please enter a city or use the current location button to get weather data.
+    </div>
+  )}
+</div>
+
     </div>
   );
 }

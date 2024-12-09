@@ -21,7 +21,7 @@ const HourlyForecast: React.FC<queryProps> = ({ query }) => {
   }, [query]);
 
   return (
-    <div className="max-w-[51%] w-full backdrop-blur-sm bg-gray-500/40 p-3 h-[400px] overflow-y-auto rounded-lg">
+    <div className="lg:max-w-[51%] max-w-full w-full backdrop-blur-sm bg-gray-500/40 p-3 h-[400px] overflow-y-auto rounded-lg">
       <h2 className="text-[32px] font-semibold  text-center mb-3 text-[#fff]">
         Hourly Forecast
       </h2>

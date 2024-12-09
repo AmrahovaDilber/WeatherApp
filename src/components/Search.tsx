@@ -15,7 +15,7 @@ const Search: React.FC<SearchProps> = ({ query, setQuery }) => {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className=" text-gray-600 font-medium text-[16px] w-[530px] placeholder-gray-400 outline-none border-none"
+        className=" text-gray-600 font-medium text-[16px] w-[480px] placeholder-gray-400 outline-none border-none"
         placeholder="Search for your preferred city..."
       />
     </div>
