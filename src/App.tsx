@@ -3,6 +3,9 @@ import Header from "./components/Header";
 import Name from "./components/Name";
 import { fetchWeather } from "./api";
 import { weatherType } from "./type/types";
+import Infor from "./components/Infor";
+import FetchSevenDays from "./components/FetchSevenDays";
+import HourlyForecast from "./components/HourlyForecast";
 
 export default function App() {
   const [query, setQuery] = useState<string>("");
@@ -63,7 +66,7 @@ export default function App() {
           <div className="flex flex-col">
             <div className="w-full flex py-[60px]">
               <Name weatherInfor={weatherInfor} query={query}></Name>
-             
+              <Infor weatherInfor={weatherInfor}></Infor>
             </div>
           
           </div>
