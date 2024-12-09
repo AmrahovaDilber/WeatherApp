@@ -2,7 +2,7 @@ import { IoSearch } from "react-icons/io5";
 
 interface SearchProps {
   query: string;
-  setQuery: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setQuery: (value: string) => void; 
 }
 
 const Search: React.FC<SearchProps> = ({ query, setQuery }) => {

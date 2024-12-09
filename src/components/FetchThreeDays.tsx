@@ -3,11 +3,11 @@ import { fetch7DaysWeather } from "../api";
 import { ForecastDay } from "../type/types";
 
 
-interface FetchSevenDaysProps {
+interface FetchThreeDayProps {
   query: string;
 
 }
-const FetchThreeDays: React.FC<FetchSevenDaysProps> = ({ query }) => {
+const FetchThreeDays: React.FC<FetchThreeDayProps> = ({ query }) => {
   const [infor, setInfor] = useState<{ forecast: { forecastday: ForecastDay[] } } | null>(null);
 
   const formatDate = (dateStr: string) => {

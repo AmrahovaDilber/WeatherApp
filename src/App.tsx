@@ -87,7 +87,7 @@ export default function App() {
       </div>
       {!currentPosition && (
         <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-8 lg:space-y-0 ">
-          <FetchThreeDays query={query} weatherInfor={weatherInfor} />
+          <FetchThreeDays query={query}  />
           <HourlyForecast query={query} />
         </div>
       )}

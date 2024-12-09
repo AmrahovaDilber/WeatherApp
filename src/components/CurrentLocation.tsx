@@ -1,6 +1,10 @@
 import { FaLocationDot } from "react-icons/fa6";
 
-const CurrentLocation: React.FC = ({ getCurrentLocation }) => {
+interface currentlocationProps{
+  getCurrentLocation:()=>void
+}
+
+const CurrentLocation: React.FC<currentlocationProps> = ({ getCurrentLocation }) => {
   return (
     <div>
       <div
