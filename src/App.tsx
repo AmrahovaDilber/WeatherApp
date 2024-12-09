@@ -68,7 +68,10 @@ export default function App() {
               <Name weatherInfor={weatherInfor} query={query}></Name>
               <Infor weatherInfor={weatherInfor}></Infor>
             </div>
-          
+            <div className="max-w-[100%] w-full flex space-x-[100px]">
+              <FetchSevenDays query={query} weatherInfor={weatherInfor}></FetchSevenDays>
+              <HourlyForecast query={query}></HourlyForecast>
+            </div>
           </div>
         )}
       </div>
