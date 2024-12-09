@@ -1,42 +1,17 @@
 import { useEffect, useState } from "react";
 import { fetch7DaysWeather } from "../api";
+import { ForecastDay } from "../type/types";
 
-interface WeatherInfor {
-  current: {
-    temp_c: number;
-    condition: {
-      icon: string;
-      text: string;
-    };
-  };
-}
-
-interface ForecastDay {
-  date: string;
-  day: {
-    condition: {
-      text: string;
-      icon: string;
-    };
-    maxtemp_c: number;
-    mintemp_c: number;
-  };
-};
 
 interface FetchSevenDaysProps {
   query: string;
-  weatherInfor: WeatherInfor;
+
 }
 
-const FetchThreeDays: React.FC<FetchSevenDaysProps> = ({
-  query,
-  weatherInfor,
-}) => {
-  const [infor, setInfor] = useState<{
-    forecast: { forecastday: ForecastDay[] };
-  } | null>(null);
+const FetchThreeDays: React.FC<FetchSevenDaysProps> = ({query}) => {
+  const [infor, setInfor] = useState<{forecast: { forecastday: ForecastDay[] }} | null>(null);
 
-  // Function to format the date
+
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return new Intl.DateTimeFormat("en-US", {

@@ -1,20 +1,28 @@
+
 import CurrentLocation from "./CurrentLocation";
-import DarkMode from "./DarkMode";
+
 import Search from "./Search";
 
 interface SearchProps {
   query: string;
   setQuery: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  getCurrentLocation:()=>void
 }
 
-
-const Header: React.FC<SearchProps> = ({ query, setQuery }) => {
+const Header: React.FC<SearchProps> = ({ query, setQuery,getCurrentLocation }) => {
   return (
-    <div className="flex items-center justify-between">
-      <DarkMode></DarkMode>
-      <Search query={query} setQuery={setQuery}></Search>
-      <CurrentLocation></CurrentLocation>
-    </div>
+    <div className="flex items-center justify-between ">
+    {/* Logo and Weather Icon */}
+
+      <p className="text-3xl font-bold text-white">Forecastify</p> 
+
+
+    {/* Search and Current Location */}
+ 
+      <Search query={query} setQuery={setQuery} />
+      <CurrentLocation getCurrentLocation={getCurrentLocation} />
+   
+  </div>
   );
 };
 export default Header;

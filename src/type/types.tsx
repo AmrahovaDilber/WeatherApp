@@ -18,3 +18,46 @@ export type weatherType = {
     uv: number;
   };
 };
+
+
+
+export type hourlyForecastType = {
+  forecast: {
+    forecastday: Array<{
+      date: string;
+      hour: Array<{
+        time: string;
+        temp_c: number;
+        humidity: number;
+        condition: {
+          text: string;
+          icon: string;
+        };
+      }>;
+    }>;
+  };
+};
+
+
+export type threeDaysType = {
+  current: {
+    temp_c: number;
+    condition: {
+      icon: string;
+      text: string;
+    };
+  };
+}
+
+
+export type ForecastDay= {
+  date: string;
+  day: {
+    condition: {
+      text: string;
+      icon: string;
+    };
+    maxtemp_c: number;
+    mintemp_c: number;
+  };
+};
