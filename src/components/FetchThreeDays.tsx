@@ -35,7 +35,7 @@ const FetchThreeDays: React.FC<FetchThreeDayProps> = ({ query }) => {
   }, [query]);
 
   return (
-    <div className="grid grid-cols-1 gap-4 max-w-full sm:max-w-[600px] md:max-w-[800px] lg:max-w-[600px] mx-auto backdrop-blur-sm bg-gray-500/40 w-full mr-20 p-4 rounded-lg">
+  <div className="grid grid-cols-1 gap-4 max-w-full sm:max-w-[600px] md:max-w-[800px] lg:max-w-[600px] mx-auto backdrop-blur-sm bg-gray-500/40 dark:bg-[#000000] w-full mr-20 p-4 rounded-lg">
       <p className="text-2xl font-semibold text-center text-white mb-4">
         3 Days Forecast:
       </p>

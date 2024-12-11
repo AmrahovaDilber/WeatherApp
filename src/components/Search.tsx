@@ -15,7 +15,7 @@ const Search: React.FC<SearchProps> = ({ query, setQuery, onSearch }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center gap-3 w-full max-w-[600px] border rounded-[40px] border-gray-300 bg-white"
+      className="flex items-center gap-3 w-full max-w-[600px] border rounded-[40px] border-gray-300 dark:border-none bg-white dark:bg-gray-800"
     >
       <button
         type="submit"
@@ -28,7 +28,7 @@ const Search: React.FC<SearchProps> = ({ query, setQuery, onSearch }) => {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="text-gray-600 font-medium text-[16px] w-[230px] sm:w-[480px] placeholder-gray-400 outline-none border-none"
+        className="text-gray-600 font-medium text-[16px] w-[230px] sm:w-[480px] dark:bg-gray-800 placeholder-gray-400 outline-none border-none"
         placeholder="Search for your preferred city..."
       />
     </form>

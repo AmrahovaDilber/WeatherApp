@@ -9,13 +9,13 @@ import FetchThreeDays from "./components/FetchThreeDays";
 
 export default function App() {
   const [query, setQuery] = useState<string>("");
-  const [searchInput, setSearchInput] = useState<string>(""); 
+  const [searchInput, setSearchInput] = useState<string>("");
   const [weatherInfor, setWeatherInfor] = useState<weatherType | null>(null);
   const [currentPosition, setCurrentPosition] = useState<boolean>(false);
-
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   useEffect(() => {
     const fetchWeatherInfor = async () => {
-      if (query.length > 3) {
+      if (query.length >= 3) {
         const data = await fetchWeather(query.toLowerCase());
         setWeatherInfor(data);
         setCurrentPosition(false);
@@ -46,7 +46,7 @@ export default function App() {
         return "./Snow.jpeg";
       case "Drizzle".toLowerCase():
         return "./Drizzle.png";
-      case "Thunderstorm".toLowerCase() :
+      case "Thunderstorm".toLowerCase():
         return "./Thunderstorm.png";
       default:
         return "./bg2.jpeg";
@@ -79,21 +79,55 @@ export default function App() {
       setQuery(searchInput);
     }
   };
+
+  function handleDarkMode() {
+    setIsDarkMode(!isDarkMode);
+    if (isDarkMode) {
+      localStorage.setItem("darkMode", "false");
+    } else {
+      localStorage.setItem("darkMode", "true");
+    }
+  }
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem("darkMode");
+    setIsDarkMode(savedDarkMode);
+    if (savedDarkMode === "true") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
   return (
-    <div className="w-full min-h-screen bg-gradient-to-r from-purple-500 to-blue-500 dark:bg-gray-800 relative">
-      <img
-        key={weatherInfor?.location?.name || "default"}
-        src={getBackgroundImage(weatherInfor?.current?.condition?.text)}
-        alt="Weather Background"
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      />
+    <div
+      className={`w-full min-h-screen relative ${
+        isDarkMode
+          ? "bg-[#121212]"
+          : "bg-gradient-to-r from-purple-500 to-blue-500"
+      }`}
+    >
+      {isDarkMode ? (
+        <div className="w-full h-full"></div>
+      ) : (
+        <img
+          key={weatherInfor?.location?.name || "default"}
+          src={getBackgroundImage(weatherInfor?.current?.condition?.text)}
+          alt="Weather Background"
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        />
+      )}
+
       <div className="absolute inset-0 bg-black bg-opacity-40 z-0 min-h-screen"></div>
+
       <div className="relative z-10 max-w-[1200px] mx-auto py-8 px-4">
         <Header
           query={searchInput}
           setQuery={setSearchInput}
           onSearch={handleSearch}
+          handleDarkMode={handleDarkMode}
           getCurrentLocation={getCurrentLocation}
+          isDarkMode={isDarkMode}
+          setIsDarkMode={setIsDarkMode}
         />
         {weatherInfor ? (
           <div className="flex flex-col space-y-8">
@@ -109,7 +143,7 @@ export default function App() {
             )}
           </div>
         ) : (
-          <div className="text-center shadow-lg text-white h-full lg:h-screen font-semibold text-lg md:text-xl lg:text-2xl flex justify-center items-center mt-[200px] sm:mt-0">
+          <div className="text-center shadow-lg text-white h-full font-semibold text-lg md:text-xl lg:text-2xl flex justify-center items-center mt-[250px]">
             Please enter a city or use the current location button to get
             weather data.
           </div>

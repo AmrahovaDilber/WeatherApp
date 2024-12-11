@@ -21,7 +21,7 @@ const HourlyForecast: React.FC<queryProps> = ({ query }) => {
   }, [query]);
 
   return (
-    <div className="lg:max-w-[51%] max-w-full w-full backdrop-blur-sm bg-gray-500/40 p-3 h-[400px] overflow-y-auto rounded-lg">
+    <div className="lg:max-w-[51%] max-w-full w-full backdrop-blur-sm dark:bg-[#000000] bg-gray-500/40 p-3 h-[400px] overflow-y-auto rounded-lg">
       <h2 className="text-[32px] font-semibold  text-center mb-3 text-[#fff]">
         Hourly Forecast
       </h2>
@@ -29,9 +29,9 @@ const HourlyForecast: React.FC<queryProps> = ({ query }) => {
         item.hour.map((it, index) => (
           <div
             key={`${item.date}-${index}`}
-            className="grid grid-cols-5 gap-4 items-center text-white py-2 border-b border-gray-600"
+            className="grid grid-cols-5 gap-4 items-center  text-white py-2 border-b border-gray-600"
           >
-            <p className="col-span-1">
+            <p className="col-span-1 ">
               {new Date(it.time).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
