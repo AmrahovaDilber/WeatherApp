@@ -83,21 +83,23 @@ export default function App() {
   function handleDarkMode() {
     setIsDarkMode(!isDarkMode);
     if (isDarkMode) {
-      localStorage.setItem("darkMode", "false");
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false"); 
     } else {
-      localStorage.setItem("darkMode", "true");
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true"); // Save "true" to indicate dark mode
     }
   }
   useEffect(() => {
-    const savedDarkMode = localStorage.getItem("darkMode");
+    const savedDarkMode = localStorage.getItem("darkMode") === "true";
     setIsDarkMode(savedDarkMode);
-    if (savedDarkMode === "true") {
+    if (savedDarkMode) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
   }, []);
-
+    
   return (
     <div
       className={`w-full min-h-screen relative ${
