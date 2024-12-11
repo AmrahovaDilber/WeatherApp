@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
-import Name from "./components/Name";
 import { fetchCurrentLocationWeather, fetchWeather } from "./api";
 import { weatherType } from "./type/types";
+import Name from "./components/Name";
 import Infor from "./components/Infor";
 import HourlyForecast from "./components/HourlyForecast";
 import FetchThreeDays from "./components/FetchThreeDays";
 
 export default function App() {
   const [query, setQuery] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>(""); 
   const [weatherInfor, setWeatherInfor] = useState<weatherType | null>(null);
-  const [currentPosition,setCurrentPosition]=useState<boolean>(false)
+  const [currentPosition, setCurrentPosition] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchWeatherInfor = async () => {
       if (query.length > 3) {
-        const data = await fetchWeather(query.toLocaleLowerCase());
+        const data = await fetchWeather(query.toLowerCase());
         setWeatherInfor(data);
-        setCurrentPosition(false)
+        setCurrentPosition(false);
       } else {
-        setWeatherInfor(null); 
+        setWeatherInfor(null);
       }
     };
 
@@ -26,23 +28,25 @@ export default function App() {
   }, [query]);
 
   const getBackgroundImage = (weatherCondition?: string): string => {
-    if (!weatherCondition) return "./bg2.jpeg"; 
-    switch (weatherCondition) {
-      case "Overcast":
-        return "./overcast.jpg";
-      case "Partly cloudy":
-        return "./cloudy.jpeg";
-      case "Sunny":
+    if (!weatherCondition) return "./bg2.jpeg";
+    switch (weatherCondition.toLowerCase()) {
+      case "Overcast".toLowerCase():
+        return "./partlycloud.jpg";
+      case "Partly Cloudy".toLowerCase():
+        return "./partcloud.jpeg";
+      case "Cloudy".toLowerCase():
+        return "./partlycloud.jpg";
+      case "Sunny".toLowerCase():
         return "./sunny.jpg";
-      case "Clear":
+      case "Clear".toLowerCase():
         return "./Clear.png";
-      case "Light rain":
+      case "Light rain".toLowerCase():
         return "./Rain.png";
-      case "Light snow":
+      case "Light snow".toLowerCase():
         return "./Snow.jpeg";
-      case "Drizzle":
+      case "Drizzle".toLowerCase():
         return "./Drizzle.png";
-      case "Thunderstorm":
+      case "Thunderstorm".toLowerCase() :
         return "./Thunderstorm.png";
       default:
         return "./bg2.jpeg";
@@ -56,7 +60,7 @@ export default function App() {
         const data = await fetchCurrentLocationWeather(latitude, longitude);
         if (data) {
           setWeatherInfor(data);
-          setCurrentPosition(true)
+          setCurrentPosition(true);
         } else {
           console.error("Failed to fetch weather data for current location");
         }
@@ -67,8 +71,16 @@ export default function App() {
     );
   };
 
+  const handleSearch = () => {
+    if (searchInput.trim() === "") {
+      setQuery("");
+      setWeatherInfor(null);
+    } else {
+      setQuery(searchInput);
+    }
+  };
   return (
-    <div className="w-full min-h-screen bg-gradient-to-r  from-purple-500 to-blue-500 dark:bg-gray-800 relative">
+    <div className="w-full min-h-screen bg-gradient-to-r from-purple-500 to-blue-500 dark:bg-gray-800 relative">
       <img
         key={weatherInfor?.location?.name || "default"}
         src={getBackgroundImage(weatherInfor?.current?.condition?.text)}
@@ -76,29 +88,33 @@ export default function App() {
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
       />
       <div className="absolute inset-0 bg-black bg-opacity-40 z-0 min-h-screen"></div>
-
       <div className="relative z-10 max-w-[1200px] mx-auto py-8 px-4">
-  <Header query={query} setQuery={setQuery} getCurrentLocation={getCurrentLocation} />
-  {weatherInfor ? (
-    <div className="flex flex-col space-y-8">
-      <div className="w-full flex flex-col md:flex-row items-center md:items-start py-8 space-y-8 md:space-y-0 md:space-x-8">
-        <Name weatherInfor={weatherInfor} query={query} />
-        <Infor weatherInfor={weatherInfor} />
+        <Header
+          query={searchInput}
+          setQuery={setSearchInput}
+          onSearch={handleSearch}
+          getCurrentLocation={getCurrentLocation}
+        />
+        {weatherInfor ? (
+          <div className="flex flex-col space-y-8">
+            <div className="w-full flex flex-col md:flex-row items-center md:items-start py-8 space-y-8 md:space-y-0 md:space-x-8">
+              <Name weatherInfor={weatherInfor} query={query} />
+              <Infor weatherInfor={weatherInfor} />
+            </div>
+            {!currentPosition && (
+              <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-8 lg:space-y-0">
+                <FetchThreeDays query={query} />
+                <HourlyForecast query={query} />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="text-center shadow-lg text-white h-full lg:h-screen font-semibold text-lg md:text-xl lg:text-2xl flex justify-center items-center mt-[200px] sm:mt-0">
+            Please enter a city or use the current location button to get
+            weather data.
+          </div>
+        )}
       </div>
-      {!currentPosition && (
-        <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-8 lg:space-y-0 ">
-          <FetchThreeDays query={query}  />
-          <HourlyForecast query={query} />
-        </div>
-      )}
-    </div>
-  ) : (
-    <div className="text-center shadow-lg text-white h-screen font-semibold text-lg md:text-xl lg:text-2xl flex justify-center items-center">
-      Please enter a city or use the current location button to get weather data.
-    </div>
-  )}
-</div>
-
     </div>
   );
 }

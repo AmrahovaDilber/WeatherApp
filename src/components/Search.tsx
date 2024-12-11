@@ -2,23 +2,36 @@ import { IoSearch } from "react-icons/io5";
 
 interface SearchProps {
   query: string;
-  setQuery: (value: string) => void; 
+  setQuery: (value: string) => void;
+  onSearch: () => void; 
 }
 
-const Search: React.FC<SearchProps> = ({ query, setQuery }) => {
+const Search: React.FC<SearchProps> = ({ query, setQuery, onSearch }) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch(); 
+  };
+
   return (
-    <div className="flex items-center gap-3 w-full max-w-[600px] border rounded-[40px] border-gray-300 bg-white">
-      <div className="w-[40px] h-[40px] flex justify-center items-center text-gray-500">
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center gap-3 w-full max-w-[600px] border rounded-[40px] border-gray-300 bg-white"
+    >
+      <button
+        type="submit"
+        className=" w-[35px] h-[35px] sm:w-[40px] sm:h-[40px] ml-2 flex justify-center items-center text-gray-500"
+        aria-label="Search"
+      >
         <IoSearch className="w-6 h-6" />
-      </div>
+      </button>
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className=" text-gray-600 font-medium text-[16px] w-[480px] placeholder-gray-400 outline-none border-none"
+        className="text-gray-600 font-medium text-[16px] w-[230px] sm:w-[480px] placeholder-gray-400 outline-none border-none"
         placeholder="Search for your preferred city..."
       />
-    </div>
+    </form>
   );
 };
 
